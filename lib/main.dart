@@ -65,7 +65,8 @@ class AnimatedGlassmorphicDialog extends StatefulWidget {
       _AnimatedGlassmorphicDialogState();
 }
 
-class _AnimatedGlassmorphicDialogState extends State<AnimatedGlassmorphicDialog>
+class _AnimatedGlassmorphicDialogState
+    extends State<AnimatedGlassmorphicDialog>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
@@ -152,143 +153,79 @@ class _AnimatedGlassmorphicDialogState extends State<AnimatedGlassmorphicDialog>
                   ),
                 ),
                 SizedBox(height: 10),
-                AnimatedSwitcher(
-                  duration: Duration(milliseconds: 500),
-                  transitionBuilder:
-                      (Widget child, Animation<double> animation) {
-                    return SlideTransition(
-                      position: Tween<Offset>(
-                        begin: Offset(0.0, 1.0),
-                        end: Offset(0.0, 0.0),
-                      ).animate(animation),
-                      child: child,
-                    );
-                  },
-                  child: _swapButtons
-                      ? Row(
-                          key: ValueKey<bool>(_swapButtons),
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            GestureDetector(
-                              onTap: _buttonsEnabled ? _handleYes : null,
-                              child: GlassmorphicContainer(
-                                width: widget.buttonWidth,
-                                height: widget.buttonHeight,
-                                borderRadius: widget.buttonRadius,
-                                blur: widget.blur,
-                                borderWidth: widget.borderWidth,
-                                borderGradient: LinearGradient(
-                                  colors: [
-                                    Colors.white.withOpacity(0.5),
-                                    Colors.blue.withOpacity(0.1),
-                                  ],
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'Yes',
-                                    style: TextStyle(
-                                      color: _buttonsEnabled
-                                          ? Colors.white
-                                          : Colors.grey,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                Container(
+                  width: widget.buttonWidth * 2 + 20,
+                  height: widget.buttonHeight,
+                  child: Stack(
+                    children: [
+                      AnimatedPositioned(
+                        duration: Duration(milliseconds: 500),
+                        left: _swapButtons ? widget.buttonWidth + 20 : 0,
+                        top: 0,
+                        child: GestureDetector(
+                          onTap: _buttonsEnabled ? _handleNo : null,
+                          child: GlassmorphicContainer(
+                            width: widget.buttonWidth,
+                            height: widget.buttonHeight,
+                            borderRadius: widget.buttonRadius,
+                            blur: widget.blur,
+                            borderWidth: widget.borderWidth,
+                            borderGradient: LinearGradient(
+                              colors: [
+                                Colors.white.withOpacity(0.5),
+                                Colors.red.withOpacity(0.1),
+                              ],
+                            ),
+                            child: Center(
+                              child: Text(
+                                'No',
+                                style: TextStyle(
+                                  color: _buttonsEnabled
+                                      ? Colors.white
+                                      : Colors.grey,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
-                            GestureDetector(
-                              onTap: _buttonsEnabled ? _handleNo : null,
-                              child: GlassmorphicContainer(
-                                width: widget.buttonWidth,
-                                height: widget.buttonHeight,
-                                borderRadius: widget.buttonRadius,
-                                blur: widget.blur,
-                                borderWidth: widget.borderWidth,
-                                borderGradient: LinearGradient(
-                                  colors: [
-                                    Colors.white.withOpacity(0.5),
-                                    Colors.red.withOpacity(0.1),
-                                  ],
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'No',
-                                    style: TextStyle(
-                                      color: _buttonsEnabled
-                                          ? Colors.white
-                                          : Colors.grey,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      : Row(
-                          key: ValueKey<bool>(_swapButtons),
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            GestureDetector(
-                              onTap: _buttonsEnabled ? _handleNo : null,
-                              child: GlassmorphicContainer(
-                                width: widget.buttonWidth,
-                                height: widget.buttonHeight,
-                                borderRadius: widget.buttonRadius,
-                                blur: widget.blur,
-                                borderWidth: widget.borderWidth,
-                                borderGradient: LinearGradient(
-                                  colors: [
-                                    Colors.white.withOpacity(0.5),
-                                    Colors.red.withOpacity(0.1),
-                                  ],
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'No',
-                                    style: TextStyle(
-                                      color: _buttonsEnabled
-                                          ? Colors.white
-                                          : Colors.grey,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: _buttonsEnabled ? _handleYes : null,
-                              child: GlassmorphicContainer(
-                                width: widget.buttonWidth,
-                                height: widget.buttonHeight,
-                                borderRadius: widget.buttonRadius,
-                                blur: widget.blur,
-                                borderWidth: widget.borderWidth,
-                                borderGradient: LinearGradient(
-                                  colors: [
-                                    Colors.white.withOpacity(0.5),
-                                    Colors.blue.withOpacity(0.1),
-                                  ],
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'Yes',
-                                    style: TextStyle(
-                                      color: _buttonsEnabled
-                                          ? Colors.white
-                                          : Colors.grey,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
+                      ),
+                      AnimatedPositioned(
+                        duration: Duration(milliseconds: 500),
+                        left: _swapButtons ? 0 : widget.buttonWidth + 20,
+                        top: 0,
+                        child: GestureDetector(
+                          onTap: _buttonsEnabled ? _handleYes : null,
+                          child: GlassmorphicContainer(
+                            width: widget.buttonWidth,
+                            height: widget.buttonHeight,
+                            borderRadius: widget.buttonRadius,
+                            blur: widget.blur,
+                            borderWidth: widget.borderWidth,
+                            borderGradient: LinearGradient(
+                              colors: [
+                                Colors.white.withOpacity(0.5),
+                                Colors.blue.withOpacity(0.1),
+                              ],
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Yes',
+                                style: TextStyle(
+                                  color: _buttonsEnabled
+                                      ? Colors.white
+                                      : Colors.grey,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
